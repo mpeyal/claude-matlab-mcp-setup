@@ -1,4 +1,4 @@
-# Claude + MATLAB MCP Setup (Windows)
+# Claude + MATLAB MCP Setup
 
 Connect Claude Desktop to MATLAB using the official [MATLAB MCP Core Server from MathWorks](https://github.com/matlab/matlab-mcp-core-server) — including a workaround for the **Microsoft Store version of Claude Desktop**, where the normal one-click `.mcpb` extension installer is broken.
 
@@ -7,10 +7,9 @@ Once connected, Claude can run MATLAB code, create and execute `.m` scripts, lin
 ## Prerequisites
 
 - MATLAB **R2021a or later** installed
-- Claude Desktop installed
-- Windows 10/11 (macOS/Linux users: the official `.mcpb` installer usually just works — see [official instructions](https://github.com/matlab/matlab-mcp-core-server#readme))
+- Claude Desktop installed (Windows/macOS) or Claude Code (Linux)
 
-## One-click install (recommended)
+## One-click install — Windows (recommended)
 
 1. Download [`install-matlab-mcp.bat`](https://github.com/mpeyal/claude-matlab-mcp-setup/raw/main/install-matlab-mcp.bat) from this repo
 2. Right-click it → Properties → check **Unblock** → OK (one-time Windows security step)
@@ -25,6 +24,20 @@ That's everything. The installer:
 - Relaunches Claude when done
 
 Safe to run twice — it reuses an already-downloaded binary and just re-registers it.
+
+## One-click install — macOS / Linux
+
+`.bat` files are Windows-only. Use the shell installer instead:
+
+```bash
+curl -fsSL https://github.com/mpeyal/claude-matlab-mcp-setup/raw/main/install-matlab-mcp.sh -o install-matlab-mcp.sh
+bash install-matlab-mcp.sh
+```
+
+- **macOS**: downloads the right binary for your Mac (Apple Silicon or Intel), removes the quarantine flag, finds MATLAB under `/Applications`, offers to quit Claude, and registers the server in Claude Desktop's config (with backup + automatic rollback on failure).
+- **Linux**: Claude Desktop isn't available on Linux, so the script registers the server with **Claude Code** (`claude mcp add`) if installed, or prints the exact JSON snippet for any other MCP client.
+
+Requires `curl` and `python3` (preinstalled on macOS and nearly all Linux distros).
 
 ## Alternative: official .mcpb extension
 
@@ -94,15 +107,6 @@ The first call takes ~30 s while it attaches to (or starts) a MATLAB session.
 | Toolboxes | Anything installed is usable; Claude can list them |
 
 Note: MCP-executed code does **not** echo into your Command Window history, but figures, workspace variables, and saved files appear normally in your MATLAB session.
-
-## Demos
-
-The `demos/` folder contains two toolbox-free examples that Claude built and tested end-to-end through this MCP connection:
-
-- **`four_wheel_robot.m`** — animated 4-wheel differential-drive robot following waypoints with a proportional heading controller
-- **`four_wheel_robot_lidar.m`** — the same robot with a ray-cast lidar model (25 beams, 240° FOV), obstacles, and gap-seeking collision avoidance with an emergency-turn reflex
-
-Run either directly in MATLAB, or ask Claude to run and modify them.
 
 ## Troubleshooting
 
