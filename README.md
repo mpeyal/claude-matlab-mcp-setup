@@ -10,13 +10,29 @@ Once connected, Claude can run MATLAB code, create and execute `.m` scripts, lin
 - Claude Desktop installed
 - Windows 10/11 (macOS/Linux users: the official `.mcpb` installer usually just works — see [official instructions](https://github.com/matlab/matlab-mcp-core-server#readme))
 
-## Normal install (try this first)
+## One-click install (recommended)
+
+1. Download [`install-matlab-mcp.bat`](https://github.com/mpeyal/claude-matlab-mcp-setup/raw/main/install-matlab-mcp.bat) from this repo
+2. Right-click it → Properties → check **Unblock** → OK (one-time Windows security step)
+3. Double-click it
+
+That's everything. The installer:
+
+- Offers to close Claude for you if it's running (required — see "gotcha" below)
+- Downloads the official MathWorks server binary from GitHub automatically (with retries and a fallback for the upcoming repo rename)
+- Verifies the binary runs, finds your MATLAB, backs up your config
+- Rolls the config back automatically if anything fails
+- Relaunches Claude when done
+
+Safe to run twice — it reuses an already-downloaded binary and just re-registers it.
+
+## Alternative: official .mcpb extension
 
 1. Download `matlab-mcp-core-server.mcpb` from the [official releases page](https://github.com/matlab/matlab-mcp-core-server/releases/latest)
 2. Double-click it → Claude Desktop opens an install prompt → click **Install**
 3. Restart Claude Desktop. Done.
 
-If that worked, you don't need anything else in this repo.
+Note: this route is broken on the Microsoft Store version of Claude Desktop — use the one-click installer above instead.
 
 ## Manual install (Microsoft Store version of Claude / broken installer)
 
